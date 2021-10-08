@@ -7,6 +7,7 @@ import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
@@ -17,8 +18,9 @@ public class EmailListener {
     @Autowired
     private EventoEmailRepository repository;
 
-    @KafkaListener(topics = "email_transacao")
-    public void ouvir(EventoExtratoDto request) {
+    @KafkaListener(topics = "conta_transacao")
+    public void ouvir(@Payload EventoExtratoDto request) {
+        System.out.println(request);
         System.out.println(request.toString());
         EventoEmail email = new EventoEmail(request.toString());
         repository.save(email);

@@ -1,6 +1,8 @@
 package br.com.zup.email.dto;
 
 import br.com.zup.email.compartilhada.EnumOperacao;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +13,8 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class EventoExtratoDto {
     @NotNull
     private EnumOperacao operacao;
@@ -30,6 +34,6 @@ public class EventoExtratoDto {
                 "credita":"debita";
         DecimalFormat df = new DecimalFormat();
         df.applyPattern("R$ #,##0.00");
-        return "Sua operação de valor " + df.format(valor.toString()) + " foi concluída com sucesso.";
+        return "Sua operação de valor " + df.format(valor.doubleValue()) + " foi concluída com sucesso.";
     }
 }
